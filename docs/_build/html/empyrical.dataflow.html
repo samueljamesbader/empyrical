@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>empyrical.dataflow package &mdash; empyrical 0.1 documentation</title>
+    <title>empyrical.dataflow package &mdash; empyrical  documentation</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,19 +23,36 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="empyrical 0.1 documentation" href="index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="top" title="empyrical  documentation" href="index.html" />
+    <link rel="up" title="empyrical package" href="empyrical.html" />
+    <link rel="next" title="empyrical.instruments package" href="empyrical.instruments.html" />
+    <link rel="prev" title="empyrical package" href="empyrical.html" /> 
   </head>
-  <body role="document">  
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="empyrical.instruments.html" title="empyrical.instruments package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="empyrical.html" title="empyrical package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">empyrical  documentation</a> &raquo;</li>
+          <li><a href="empyrical.html" accesskey="U">empyrical package</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body">
             
   <div class="section" id="empyrical-dataflow-package">
 <h1>empyrical.dataflow package<a class="headerlink" href="#empyrical-dataflow-package" title="Permalink to this headline">¶</a></h1>
@@ -48,102 +65,100 @@
 <p>&#64;author: Samuel James Bader (<a class="reference external" href="mailto:samuel&#46;james&#46;bader&#37;&#52;&#48;gmail&#46;com">samuel<span>&#46;</span>james<span>&#46;</span>bader<span>&#64;</span>gmail<span>&#46;</span>com</a>)</p>
 <dl class="class">
 <dt id="empyrical.dataflow.logger.FakeLogManager">
-<em class="property">class </em><code class="descclassname">empyrical.dataflow.logger.</code><code class="descname">FakeLogManager</code><span class="sig-paren">(</span><em>expname</em>, <em>datacols</em>, <em>datawidth=20</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<dl class="method">
+<em class="property">class </em><tt class="descclassname">empyrical.dataflow.logger.</tt><tt class="descname">FakeLogManager</tt><big>(</big><em>expname</em>, <em>datacols</em>, <em>datawidth=20</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.close" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.close" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.critical">
-<code class="descname">critical</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.critical" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">critical</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.critical" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.debug">
-<code class="descname">debug</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.debug" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">debug</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.debug" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.error" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">error</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.error" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.info">
-<code class="descname">info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.info" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">info</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.output_comment">
-<code class="descname">output_comment</code><span class="sig-paren">(</span><em>comment</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_comment" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_comment</tt><big>(</big><em>comment</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.output_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_comment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.output_data">
-<code class="descname">output_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_data</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.output_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.output_headers">
-<code class="descname">output_headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_headers" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_headers</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.output_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.output_headers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.FakeLogManager.warning">
-<code class="descname">warning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.warning" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">warning</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#FakeLogManager.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.FakeLogManager.warning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="empyrical.dataflow.logger.LogManager">
-<em class="property">class </em><code class="descclassname">empyrical.dataflow.logger.</code><code class="descname">LogManager</code><span class="sig-paren">(</span><em>expname</em>, <em>datacols</em>, <em>datawidth=20</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
-<dl class="method">
+<em class="property">class </em><tt class="descclassname">empyrical.dataflow.logger.</tt><tt class="descname">LogManager</tt><big>(</big><em>expname</em>, <em>datacols</em>, <em>datawidth=20</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.close" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.close" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.critical">
-<code class="descname">critical</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.critical" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">critical</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.critical" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.debug">
-<code class="descname">debug</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.debug" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">debug</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.debug" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.error" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">error</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.error" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.info">
-<code class="descname">info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.info" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">info</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.output_comment">
-<code class="descname">output_comment</code><span class="sig-paren">(</span><em>comment</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_comment" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_comment</tt><big>(</big><em>comment</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.output_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_comment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.output_data">
-<code class="descname">output_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_data" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_data</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.output_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.output_headers">
-<code class="descname">output_headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_headers" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">output_headers</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.output_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.output_headers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="empyrical.dataflow.logger.LogManager.warning">
-<code class="descname">warning</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.warning" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">warning</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/empyrical/dataflow/logger.html#LogManager.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#empyrical.dataflow.logger.LogManager.warning" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -158,7 +173,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -169,21 +184,19 @@
 </ul>
 </li>
 </ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/empyrical.dataflow.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="empyrical.html"
+                        title="previous chapter">empyrical package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="empyrical.instruments.html"
+                        title="next chapter">empyrical.instruments package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/empyrical.dataflow.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -200,20 +213,28 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2016, Samuel James Bader.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
-      
-      |
-      <a href="_sources/empyrical.dataflow.txt"
-          rel="nofollow">Page source</a>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="empyrical.instruments.html" title="empyrical.instruments package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="empyrical.html" title="empyrical package"
+             >previous</a> |</li>
+        <li><a href="index.html">empyrical  documentation</a> &raquo;</li>
+          <li><a href="empyrical.html" >empyrical package</a> &raquo;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer">
+        &copy; Copyright 2016, Samuel James Bader.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
   </body>
 </html>
