@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>empyrical.instruments.keithley &mdash; empyrical  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="empyrical  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">empyrical  documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for empyrical.instruments.keithley</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Mon Apr  4 20:34:05 2016</span>
+
+<span class="sd">@author: Samuel James Bader (samuel.james.bader@gmail.com)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">visa</span>
+
+<div class="viewcode-block" id="Keithley_2636A"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A">[docs]</a><span class="k">class</span> <span class="nc">Keithley_2636A</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Instrument driver for Keithley 2600-model Source Meter (tested with 2636A)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gpib_address</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_closed</span><span class="o">=</span><span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span> <span class="o">=</span> <span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="n">gpib_address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">read_termination</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    
+<div class="viewcode-block" id="Keithley_2636A.close"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_closed</span><span class="o">=</span><span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">currentA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the current reading for channel A.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.measure.i())&#39;</span><span class="p">))</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">currentB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the current reading for channel B.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.measure.i())&#39;</span><span class="p">))</span>
+    <span class="nd">@currentA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.currentA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.currentA">[docs]</a>    <span class="k">def</span> <span class="nf">currentA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source current for channel A.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.func=smua.OUTPUT_DCAMPS;smua.source.leveli=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@currentB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.currentB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.currentB">[docs]</a>    <span class="k">def</span> <span class="nf">currentB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source current for channel B.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.func=smub.OUTPUT_DCAMPS;smub.source.leveli=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">voltageA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the voltage reading for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.measure.v())&#39;</span><span class="p">))</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">voltageB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the voltage reading for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.measure.v())&#39;</span><span class="p">))</span>
+    <span class="nd">@voltageA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.voltageA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.voltageA">[docs]</a>    <span class="k">def</span> <span class="nf">voltageA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source voltage for channel A.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.func=smua.OUTPUT_DCVOLTS;smua.source.levelv=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@voltageB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.voltageB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.voltageB">[docs]</a>    <span class="k">def</span> <span class="nf">voltageB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source voltage for channel B.&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.func=smub.OUTPUT_DCVOLTS;smub.source.levelv=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modeA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the source function for channel A.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smuA.source.func())&#39;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modeB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the source function for channel B.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smuB.source.func())&#39;</span><span class="p">)</span>
+    <span class="nd">@modeA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.modeA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.modeA">[docs]</a>    <span class="k">def</span> <span class="nf">modeA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source function (&#39;voltage&#39; or &#39;current&#39;) for channel A&#39;&#39;&#39;</span>
+        <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;voltage&#39;</span><span class="p">:</span><span class="s">&#39;OUTPUT_DCVOLTS&#39;</span><span class="p">,</span><span class="s">&#39;current&#39;</span><span class="p">:</span><span class="s">&#39;OUTPUT_DCAMPS&#39;</span><span class="p">}[</span><span class="n">value</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.func=smua.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@modeB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.modeB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.modeB">[docs]</a>    <span class="k">def</span> <span class="nf">modeB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Set the source function (&#39;voltage&#39; or &#39;current&#39;) for channel B&#39;&#39;&#39;</span>
+        <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;voltage&#39;</span><span class="p">:</span><span class="s">&#39;OUTPUT_DCVOLTS&#39;</span><span class="p">,</span><span class="s">&#39;current&#39;</span><span class="p">:</span><span class="s">&#39;OUTPUT_DCAMPS&#39;</span><span class="p">}[</span><span class="n">value</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.func=smub.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">outputA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;) for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">&#39;off&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;highz&#39;</span><span class="p">}[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.source.output)&#39;</span><span class="p">)))]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">outputB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;)  for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">&#39;off&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;highz&#39;</span><span class="p">}[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.source.output)&#39;</span><span class="p">)))]</span>
+    <span class="nd">@outputA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.outputA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.outputA">[docs]</a>    <span class="k">def</span> <span class="nf">outputA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;) for channel A&#39;&#39;&#39;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s">&#39;ON&#39;</span> <span class="k">if</span> <span class="p">((</span><span class="n">value</span><span class="o">==</span><span class="bp">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span><span class="o">==</span><span class="s">&#39;on&#39;</span><span class="p">))</span> <span class="k">else</span> <span class="s">&#39;OFF&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.output= smua.OUTPUT_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">status</span><span class="p">)</span></div>
+    <span class="nd">@outputB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.outputB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.outputB">[docs]</a>    <span class="k">def</span> <span class="nf">outputB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;) for channel B&#39;&#39;&#39;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s">&#39;ON&#39;</span> <span class="k">if</span> <span class="p">((</span><span class="n">value</span><span class="o">==</span><span class="bp">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">value</span><span class="o">==</span><span class="s">&#39;on&#39;</span><span class="p">))</span> <span class="k">else</span> <span class="s">&#39;OFF&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.output= smub.OUTPUT_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">status</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">voltagelimitA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output voltage compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.source.limitv&#39;</span><span class="p">))</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">voltagelimitB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output voltage compliance limit for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.source.limitv&#39;</span><span class="p">))</span>
+    <span class="nd">@voltagelimitA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.voltagelimitA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.voltagelimitA">[docs]</a>    <span class="k">def</span> <span class="nf">voltagelimitA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output voltage compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.limitv=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@voltagelimitB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.voltagelimitB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.voltagelimitB">[docs]</a>    <span class="k">def</span> <span class="nf">voltagelimitB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output voltage compliance limit for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.limitv=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span>
+
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">currentlimitA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.source.limiti&#39;</span><span class="p">))</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">currentlimitB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.source.limiti&#39;</span><span class="p">))</span>
+    <span class="nd">@currentlimitA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.currentlimitA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.currentlimitA">[docs]</a>    <span class="k">def</span> <span class="nf">currentlimitA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.source.limiti=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@currentlimitB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.currentlimitB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.currentlimitB">[docs]</a>    <span class="k">def</span> <span class="nf">currentlimitB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.source.limiti=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sensemodeA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;) for channel A&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">&#39;2-wire&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s">&#39;4-wire&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;cal&#39;</span><span class="p">}[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smua.sense)&#39;</span><span class="p">)))]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sensemodeB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets the source output (&#39;on&#39;/&#39;off&#39;/&#39;highz&#39;) for channel B&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s">&#39;2-wire&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s">&#39;4-wire&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">&#39;cal&#39;</span><span class="p">}[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;print(smub.sense)&#39;</span><span class="p">)))]</span>
+    <span class="nd">@sensemodeA.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.sensemodeA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.sensemodeA">[docs]</a>    <span class="k">def</span> <span class="nf">sensemodeA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;2-wire&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="s">&#39;4-wire&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;cal&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">}[</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.sense=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span></div>
+    <span class="nd">@sensemodeB.setter</span>
+<div class="viewcode-block" id="Keithley_2636A.sensemodeB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.sensemodeB">[docs]</a>    <span class="k">def</span> <span class="nf">sensemodeB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the output current compliance limit for channel A&#39;&#39;&#39;</span>
+        <span class="n">value</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;2-wire&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="s">&#39;4-wire&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;cal&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">}[</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.sense=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Keithley_2636A.resetA"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.resetA">[docs]</a>    <span class="k">def</span> <span class="nf">resetA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Resets the A channel&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smua.reset()&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Keithley_2636A.resetB"><a class="viewcode-back" href="../../../empyrical.instruments.html#empyrical.instruments.keithley.Keithley_2636A.resetB">[docs]</a>    <span class="k">def</span> <span class="nf">resetB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Resets the B channel&#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_visa_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;smub.reset()&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">empyrical  documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Samuel James Bader.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

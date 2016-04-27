@@ -12,16 +12,14 @@ from threading import Thread
 import time
 
 class Experiment:
-    '''Manages the instruments and dataflow for an experiment
-    
-    .. note::
-        use like::
-            with Experiment(name, req_inst, datacols) as exp
-                pass
-    '''
+    """
+    Manages the instruments and dataflow for an experiment
+    """
     
     def __init__(self,experiment_name,required_instruments,datacols):
-        '''Initialize all the instruments and the log manager'''
+        """
+        Initialize all the instruments and the log manager
+        """
         self._closed=False
         self._inst_dict={}
         self._threads=[]
@@ -37,7 +35,7 @@ class Experiment:
             self.close()
 
     def close(self):
-        '''Closes all instruments and the logger'''
+        """Closes all instruments and the logger"""
         if not self._closed:
             self._closed=True
             for t,ef in self._threads:
@@ -77,11 +75,26 @@ class Experiment:
         else:
             return procedure(*args,**kwargs)
         
-        
+# Pass-by-reference boolean exit signal
 class ExitFlag:
+    """
+    ExitFlag is just a wrapper class to effectively pass a boolean by
+    reference. A parent thread can provide an ExitFlag object to its child and
+    use it to provide an updatable boolean so it can signal it's child to stop.
+    """
+
     def __init__(self):
+        """
+        Create an ExitFlag with the should_exit signal initialized to
+        False.
+        """
+
         self.should_exit=False
-    
+        """
+        This variable should be set to True to indicate to a thread it
+        should stop.  Child threads should check this variable frequently to
+        see if a stop has been requested.
+        """
                     
                 
                 
