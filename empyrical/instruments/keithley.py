@@ -5,19 +5,23 @@ Created on Mon Apr  4 20:34:05 2016
 @author: Samuel James Bader (samuel.james.bader@gmail.com)
 """
 import visa
-
+import logging
 class Keithley_2636A:
     '''
     Instrument driver for Keithley 2600-model Source Meter (tested with 2636A)
     '''
     def __init__(self, gpib_address=''):
         self._closed=False
+        logging.info("Opening Keithley.")
         self._visa_handle = visa.ResourceManager().open_resource(gpib_address)
         self._visa_handle.read_termination = '\n'
     
     def close(self):
         if not self._closed:
             self._closed=True
+            logging.info("Closing Keithley.")
+            self.resetA()
+            self.resetB()
             self._visa_handle.close()
 
     def __enter__(self):

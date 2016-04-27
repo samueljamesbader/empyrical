@@ -95,6 +95,11 @@ class LogManager:
     def critical(self,*args,**kwargs):
         return logging.critical(*args,**kwargs)
         
+    def get_logname(self):
+        return self._logname
+    def get_dataname(self):
+        return self._dataname
+        
         
         
 class FakeLogManager:

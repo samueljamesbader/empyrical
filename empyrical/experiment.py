@@ -26,12 +26,12 @@ class Experiment:
         self._inst_dict={}
         self._threads=[]
         try:
+            self._lm=LogManager(experiment_name,datacols)
             for inst_name,inst_man,inst_type,inst_id in required_instruments:
                 import importlib
                 modulename="empyrical.instruments."+inst_man.lower()
                 mod=importlib.import_module(modulename)
                 self._inst_dict[inst_name]=(getattr(mod,inst_type))(inst_id)
-            self._lm=LogManager(experiment_name,datacols)
         except Exception as e:
             print(e)
             self.close()
@@ -74,9 +74,17 @@ class Experiment:
             thread=Thread(target=procedure,args=args,kwargs=kwargs)
             self._threads+=[[thread,ef]]
             thread.start()
+            return [
+                ef,
+                self._lm.get_dataname(),
+                self._lm.get_logname()
+            ]
         else:
-            return procedure(*args,**kwargs)
-        
+            return [
+                procedure(*args,**kwargs),
+                self._lm.get_dataname(),
+                self._lm.get_logname()
+            ]
         
 class ExitFlag:
     def __init__(self):

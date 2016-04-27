@@ -29,7 +29,6 @@ class Horiba_iHR320:
             self._lv_id_lock.release()
             
             mc=labview.getvireference(r"C:\Users\Faria\Documents\Sam\TestingLabView\MonoControl.vi")
-            time.sleep(3)
             mc.OpenFrontPanel
             mc.Run
             
@@ -43,7 +42,8 @@ class Horiba_iHR320:
             logging.info("Closing Horiba_iHR320 "+self._instrument_id)
             try: self._connect_thread()
             except: pass
-            self._mc.Abort
+            self._mc.SetControlValue("STOP",True)
+            time.sleep(.5)
             self._mc.CloseFrontPanel
             self._thread.join()
         
@@ -65,25 +65,73 @@ class Horiba_iHR320:
         self._mc=labview.getvireference(r"C:\Users\Faria\Documents\Sam\TestingLabView\MonoControl.vi")
         
 
-    def connect(self):
+    def connect(self,timeout=5):
         self._connect_thread()
         time.sleep(1)
         self._mc.SetControlValue("Mono ID",self._instrument_id)
         self._mc.SetControlValue("Connect",True)
-        time.sleep(5)
-        self._mc.SetControlValue("Connect",False)
+        tstart=time.time()
+        while(time.time()<tstart+timeout):
+            if(self._mc.GetControlValue("Initialized")):
+                break
+            time.sleep(.25)
+        else:
+            raise "Attempt to connect to Horiba timed out."
+        #self._mc.SetControlValue("Connect",False)
         logging.info("Horiba_iHR320 "+self._instrument_id+" ready.")
     
     @property
     def wavelength(self):
         return self._mc.GetControlValue("Current WL")
     @wavelength.setter
-    def wavelength(self,wl):
+    def wavelength(self,wl,timeout=5,acc=.01):
         self._mc.SetControlValue("Target WL",wl)
         self._mc.SetControlValue("Move To\nTarget Positions",True)
         time.sleep(.1)
-        self._mc.SetControlValue("Move To\nTarget Positions",False)
-        logging.info("Waiting for move...")
+        #self._mc.SetControlValue("Move To\nTarget Positions",False)
+        tstart=time.time()
+        while(time.time()<tstart+timeout):
+            if(abs(self._mc.GetControlValue("Current WL")-wl)<.01):
+                break
+            time.sleep(.1)
+        logging.info("Waiting for settle...")
+        time.sleep(5)
+        logging.info("Done waiting.")
+        
+    @property
+    def frontentranceslit(self):
+        return self._mc.GetControlValue("Front Entrance")
+    @frontentranceslit.setter
+    def frontentranceslit(self,width):
+        self._mc.SetControlValue("Target\nFront Entrance",width)
+        self._mc.SetControlValue("Move To\nTarget Positions",True)
+        time.sleep(10)
+        logging.info("Done waiting.")
+    @property
+    def sideentranceslit(self):
+        return self._mc.GetControlValue("Side Entrance")
+    @sideentranceslit.setter
+    def sideentranceslit(self,width):
+        self._mc.SetControlValue("Target\nSide Entrance",width)
+        self._mc.SetControlValue("Move To\nTarget Positions",True)
+        time.sleep(10)
+        logging.info("Done waiting.")
+    @property
+    def frontexitslit(self):
+        return self._mc.GetControlValue("Front Exit")
+    @frontexitslit.setter
+    def frontexitslit(self,width):
+        self._mc.SetControlValue("Target\nFront Exit",width)
+        self._mc.SetControlValue("Move To\nTarget Positions",True)
+        time.sleep(10)
+        logging.info("Done waiting.")
+    @property
+    def sideexitslit(self):
+        return self._mc.GetControlValue("Side Exit")
+    @sideexitslit.setter
+    def sideexitslit(self,width):
+        self._mc.SetControlValue("Target\nSide Exit",width)
+        self._mc.SetControlValue("Move To\nTarget Positions",True)
         time.sleep(10)
         logging.info("Done waiting.")
         
